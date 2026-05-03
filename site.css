@@ -63,12 +63,19 @@ h3 {
 }
 
 p,
-ul {
+ul,
+figure,
+blockquote {
   margin: 0;
 }
 
 ul {
   padding-left: 1.25rem;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 .skip-link {
@@ -110,10 +117,7 @@ ul {
 }
 
 .header-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
   gap: var(--space-2);
   padding: var(--space-2);
   border: 1px solid var(--color-border);
@@ -192,6 +196,11 @@ main {
   gap: var(--space-2);
 }
 
+.media-layout {
+  display: grid;
+  gap: var(--space-2);
+}
+
 .section-block {
   padding-bottom: var(--space-4);
 }
@@ -218,20 +227,53 @@ main {
   color: var(--color-muted);
 }
 
+.fact-list {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.1rem;
+}
+
+.media-figure {
+  margin: 0;
+  align-content: start;
+}
+
+.media-figure img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 0.15rem);
+  border: 1px solid rgba(28, 28, 30, 0.08);
+}
+
+.link-card {
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.18) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-surface);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.external-link:hover,
+.external-link:focus-visible {
+  color: var(--color-surface);
+  background: #005fcc;
+}
+
 .content-card h3,
 .footer-card h2,
 .hero-copy h1,
 .hero-side h2,
 .section-heading h2 {
   color: var(--color-text);
-}
-
-.card-grid.three-up .content-card:first-child {
-  background: linear-gradient(180deg, rgba(50, 205, 50, 0.16) 0%, rgba(255, 255, 255, 1) 100%);
-}
-
-.card-grid.three-up .content-card:nth-child(2) {
-  border-color: rgba(255, 215, 0, 0.95);
 }
 
 .footer-card {
@@ -241,18 +283,4 @@ main {
 .placeholder-list {
   display: grid;
   gap: 0.4rem;
-}
-
-@media (min-width: 760px) {
-  .hero {
-    grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
-  }
-
-  .card-grid.two-up {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .card-grid.three-up {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
