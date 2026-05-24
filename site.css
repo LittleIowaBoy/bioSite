@@ -246,6 +246,15 @@ main {
   border: 1px solid rgba(28, 28, 30, 0.08);
 }
 
+.card-img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: calc(var(--radius) - 0.25rem);
+  border: 1px solid rgba(28, 28, 30, 0.08);
+}
+
 .link-card {
   background: linear-gradient(180deg, rgba(255, 215, 0, 0.18) 0%, rgba(255, 255, 255, 1) 100%);
 }
@@ -283,4 +292,295 @@ main {
 .placeholder-list {
   display: grid;
   gap: 0.4rem;
+}
+
+/* ═══ Stage 1 — polish ═══════════════════════════════════════ */
+
+/* Card entrance animation */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy {
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+.content-card {
+  animation: fadeSlideUp 0.45s ease both;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.card-grid > .content-card:nth-child(1) { animation-delay: 0.05s; }
+.card-grid > .content-card:nth-child(2) { animation-delay: 0.10s; }
+.card-grid > .content-card:nth-child(3) { animation-delay: 0.15s; }
+.card-grid > .content-card:nth-child(4) { animation-delay: 0.20s; }
+.card-grid > .content-card:nth-child(5) { animation-delay: 0.25s; }
+.card-grid > .content-card:nth-child(6) { animation-delay: 0.30s; }
+
+/* Card hover lift */
+.content-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px rgba(28, 28, 30, 0.13);
+}
+
+/* Fluid card images — overrides fixed 200 × 200 */
+.card-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--color-background);
+  cursor: zoom-in;
+}
+
+.media-figure img {
+  cursor: zoom-in;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #1a2e1a;
+    --color-surface:    #213521;
+    --color-border:     #2e4a2e;
+    --color-text:       #f2f2f7;
+    --color-muted:      #b8c8b8;
+    --color-accent:     #4da6ff;
+    --color-highlight:  #ffd84d;
+    --color-support:    #4ddb4d;
+  }
+
+  body {
+    background: linear-gradient(
+      180deg,
+      rgba(50, 205, 50, 0.18) 0%,
+      #1a2e1a 18%,
+      #1a2e1a 100%
+    );
+  }
+
+  .hero-copy {
+    background: linear-gradient(
+      180deg,
+      rgba(50, 205, 50, 0.20) 0%,
+      rgba(33, 53, 33, 0.98) 100%
+    );
+  }
+
+  /* Shadows are invisible on dark bg — use black-based depth instead */
+  .header-bar {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.40);
+  }
+
+  .hero-copy,
+  .content-card,
+  .footer-card {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .quiz-question {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30);
+  }
+}
+
+/* ═══ Stage 2 — interactive features ════════════════════════ */
+
+/* Fact rotator */
+.fact-rotator {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--color-highlight);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, var(--color-surface) 100%);
+}
+
+.fact-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.fact-text {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  min-height: 2.4em;
+  transition: opacity 300ms ease;
+}
+
+.fact-text.fading {
+  opacity: 0;
+}
+
+.fact-btn {
+  justify-self: start;
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-highlight);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.fact-btn:hover,
+.fact-btn:focus-visible {
+  background: #e6c200;
+  transform: translateY(-1px);
+}
+
+/* Quiz */
+.quiz-wrap {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.quiz-question {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 8px 20px rgba(28, 28, 30, 0.05);
+}
+
+.quiz-question p {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-text) !important;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  padding: 0.55rem 0.85rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-background);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.quiz-option.correct {
+  border-color: var(--color-support);
+  background: rgba(50, 205, 50, 0.12);
+}
+
+.quiz-option.incorrect {
+  border-color: #ff3b30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.quiz-submit {
+  justify-self: start;
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.quiz-submit:hover:not(:disabled),
+.quiz-submit:focus-visible:not(:disabled) {
+  background: #005fcc;
+  transform: translateY(-1px);
+}
+
+.quiz-submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.quiz-result {
+  display: none;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  border: 2px solid var(--color-support);
+  background: rgba(50, 205, 50, 0.1);
+  color: var(--color-text);
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+}
+
+.lightbox-overlay.open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+  background: rgba(255, 255, 255, 0.3);
 }
